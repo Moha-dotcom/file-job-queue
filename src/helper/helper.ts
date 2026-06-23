@@ -8,10 +8,10 @@ const failed = path.join(baseFile, 'failed.json');
 const pending = path.join(baseFile, 'pending.json');
 const done = path.join(baseFile, 'done.json');
 
-console.log(pending)
 
 
-async function readJobFiles(filePath : string)  {
+
+export async function readJobFiles(filePath : string)  {
     try {
         const response = await fs.readFile(filePath, 'utf-8')
         return JSON.parse(response || "[]");
