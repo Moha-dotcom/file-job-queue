@@ -1,21 +1,14 @@
-import { Router} from 'express'
-import cookieParser from 'cookie-parser'
-import {JobSchema, JobInput, OrderInput, OrderSchema, validateSchema} from "./schema/orderSchema";
+import express from "express";
+import cookieParser from "cookie-parser";
+import orderRoute from "./orderRoute/route";
+const app = express();
+
+app.use(cookieParser());
+app.use(express.json());
+
+app.use('/order', orderRoute)
 
 
-const orderRoute = Router();
-// create Order
-orderRoute.post('/', validateSchema(OrderSchema),  async (req, res) => {
-    const order : OrderInput = req.body;
-    // createQueue
-    const createJob : JobInput= {
-        jobId: crypto.randomUUID(),
-        status: "pending",
-        payload: order,
-        createdAt: new Date().toISOString(),
-    }
-
-
-
+app.listen(3000, () => {
+    console.log("Server started on port 3000");
 })
-

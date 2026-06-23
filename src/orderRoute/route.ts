@@ -1,13 +1,10 @@
 import { Router} from 'express'
-import cookieParser from 'cookie-parser'
-import {JobSchema, JobInput, OrderInput, OrderSchema, validateSchema} from "../schema/orderSchema"
-
+import { JobInput, OrderInput, OrderSchema, validateSchema} from "../schema/orderSchema"
+import {writeQueue} from "../helper/helper";
 
 const orderRoute = Router();
-// create Order
 orderRoute.post('/', validateSchema(OrderSchema),  async (req, res) => {
     const order : OrderInput = req.body;
-    // createQueue
     const createJob : JobInput= {
         jobId: crypto.randomUUID(),
         status: "pending",
@@ -15,7 +12,20 @@ orderRoute.post('/', validateSchema(OrderSchema),  async (req, res) => {
         createdAt: new Date().toISOString(),
     }
 
+    try{
+        await writeQueue(createJob);
+        return res.status(201).json({
+            status: "Successfully created your order",
+            payload: createJob
+        })
+    }catch(err : unknown){
+        return res.status(500).json({
+            status: "error",
+        })
+    }
 
 
 })
 
+
+export default orderRoute

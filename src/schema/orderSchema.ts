@@ -1,18 +1,20 @@
 import zod from "zod/v4";
 import {z} from "zod";
-import {ZodSchema} from "zod/v4";
+import {ZodSchema} from "zod";
 import {Response, Request, NextFunction} from "express";
 
 
 const ItemSchema = z.object({
-    itemId: z.string().uuidv4("itemId is required as UUID"),
+    itemId: z.string().uuidv4("itemId is required as UUID")
+        .default(() =>  crypto.randomUUID()),
     name : z.string().trim().toLowerCase()
 })
 
+
 export const OrderSchema =  zod.object({
-    orderId: zod.string().uuidv4("order Id is required as UUID"),
-    firstName : zod.string("First Name is required "),
-    lastName : zod.string("Last Name is required "),
+    orderId: zod.string().uuidv4("order Id is required as UUID").default(() => crypto.randomUUID()),
+    firstName :zod.string().min(1, "First Name is required"),
+    lastName : zod.string().min(1, "Last Name is required"),
     item : zod.array(ItemSchema)
 })
 
