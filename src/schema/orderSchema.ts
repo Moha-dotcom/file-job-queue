@@ -4,6 +4,12 @@ import {ZodSchema} from "zod";
 import {Response, Request, NextFunction} from "express";
 
 
+
+const payment = zod.object({
+
+})
+
+
 const ItemSchema = z.object({
     itemId: z.string().uuidv4("itemId is required as UUID")
         .default(() =>  crypto.randomUUID()),

@@ -1,6 +1,6 @@
 import { Router} from 'express'
-import { JobInput, OrderInput, OrderSchema, validateSchema} from "../schema/orderSchema"
-import {writeQueue} from "../helper/helper";
+import { JobInput, OrderInput, OrderSchema, validateSchema} from "../../schema/orderSchema"
+import {writeQueue} from "../../helper/helper";
 
 const orderRoute = Router();
 orderRoute.post('/', validateSchema(OrderSchema),  async (req, res) => {
@@ -26,6 +26,9 @@ orderRoute.post('/', validateSchema(OrderSchema),  async (req, res) => {
 
 
 })
+
+
+
 
 
 export default orderRoute
