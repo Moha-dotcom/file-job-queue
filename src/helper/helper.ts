@@ -1,4 +1,4 @@
-import {JobInput} from "../schema/orderSchema";
+import {JobInput} from "../schema/checkoutSchema";
 import fs from "fs/promises";
 import path from "path";
 import {spawn} from "node:child_process";
@@ -10,18 +10,21 @@ const pending = path.join(baseFile, 'pending.json');
 const done = path.join(baseFile, 'done.json');
 
 
-const pythonFile = path.resolve(process.cwd(), "..", "..", "main.py");
+const pythonFile = path.resolve(process.cwd(), "..", "main.py");
 type Card = {
     card: string;
     expiry_date: string;
     cvv: number;
 };
+
+console.log()
 export function validateCreditCard(currCard : Card) : Promise<boolean> {
    return new Promise((resolve, reject) => {
        let body = "";
        let validated = false;
        const pythonPath =
            "/Users/user/Desktop/Documents/file-job-queue/.venv/bin/python3";
+
        const child = spawn(pythonPath, [pythonFile], {
            cwd: path.dirname(pythonFile),
 
@@ -54,6 +57,7 @@ export function validateCreditCard(currCard : Card) : Promise<boolean> {
 
 
 }
+
 
 
 export async function readJobFiles(filePath : string)  {

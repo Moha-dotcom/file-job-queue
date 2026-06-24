@@ -3,7 +3,12 @@ import cookieParser from "cookie-parser";
 import orderRoute from "./route/orderRoute/route";
 import paymentRouter from "./route/paymentRoute/payment";
 import {startWorker} from "./worker";
+import path from "path";
+import {configDotenv} from "dotenv";
+
 const app = express();
+
+
 
 app.use(cookieParser());
 app.use(express.json());
@@ -11,8 +16,10 @@ app.use(express.json());
 app.use('/order', orderRoute)
 app.use('/payment', paymentRouter);
 
+startWorker()
+
 
 app.listen(3000, () => {
     console.log("Server started on port 3000");
-    startWorker()
+
 })

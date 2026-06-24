@@ -1,15 +1,10 @@
 from card_generator import CardValidator, CardGenerator
 import json
-
 amex_generator = CardGenerator("amex")
-
-# Generate 2 cards with formatting and bank info
 pretty_cards = amex_generator.generate(
     count=9,
     beautiful_format=True,
-
 )
-
 print(json.dumps([
     {
         "card": "3438 4472 0543 385",

@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import process from "process";
 import {readJobFiles} from "./helper/helper";
-import {JobInput} from "./schema/orderSchema";
+import {JobInput} from "./schema/checkoutSchema";
 import EventEmitter from 'events';
 
 export const event = new EventEmitter();
@@ -15,11 +15,16 @@ const done = path.join(baseFile, 'done.json');
 
 
 
-async function processQueue() :Promise<JobInput | undefined > {
+async function processQueue() :Promise<JobInput | null > {
     try {
         const response = await readJobFiles(pending);
+
         const job = response.shift();
-        if(!job) return;
+        await fs.writeFile(pending, JSON.stringify(response, null, 2));
+        if(!job) return null;
+
+
+
         const processingFile = await readJobFiles(processing);
         job.status = "processing";
         processingFile.push(job);
