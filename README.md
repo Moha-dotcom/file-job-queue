@@ -1,8 +1,6 @@
 # File-Based Job Queue
 
-Order -> Payment -> Submit 
-Before submitting anything we check the payment
-and emit an event with  either success which is equal -> Payment successfull or Failed 
+
 
 A Node.js + TypeScript REST API that simulates a pizza order processing system using a file-based job queue.
 
